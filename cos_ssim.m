@@ -2,7 +2,7 @@ function  [externalID,maxcos] = cos_ssim(files,aid,sigma)
     dirs = dir( files ); 
     dirs = dirs(3:length(dirs),1);
     externalID = 0;
-    maxcos = 0;
+    maxSSIM = 0;
     views = zeros(size(length(dirs)));
 
     for i =1:1:length(dirs)
@@ -14,11 +14,11 @@ function  [externalID,maxcos] = cos_ssim(files,aid,sigma)
             target =  (imread(strcat(files,'\',num2str(aid),'.png')));
             external  = (imread(allname));
             [target,external] = AddNoise(target,external,sigma);
-            [~,cos,~,~,~] = accumelate(target,external);
-            views(id)=cos;
+            [~,~,ssim,~,~] = accumelate(target,external);
+            views(id)=ssim;
         
-            if cos>maxcos
-                maxcos = cos;
+            if ssim>maxSSIM
+                maxSSIM = ssim;
                 externalID = id;
             end     
          end
@@ -47,6 +47,6 @@ function [target,external] = AddNoise(target,external,sigma)
     randn('seed',0);
 
     external = single(external);
-    target = target+sigma/255.*randn(size(target));%Ìí¼ÓÔëÉù(un_Clipping)
+    target = target+sigma/255.*randn(size(target));%ÃŒÃ­Â¼Ã“Ã”Ã«Ã‰Ã¹(un_Clipping)
     target = single(target);
 end
