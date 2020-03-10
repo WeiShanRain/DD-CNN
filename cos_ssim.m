@@ -1,4 +1,4 @@
-function  [externalID,maxcos] = cos_ssim(files,aid,sigma)
+function  [externalID,maxSSIM] = cos_ssim(files,aid,sigma)
     dirs = dir( files ); 
     dirs = dirs(3:length(dirs),1);
     externalID = 0;
